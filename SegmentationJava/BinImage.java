@@ -27,7 +27,7 @@ public class BinImage {
     public static void main(String args[]) {
         Segmentation seg = new Segmentation();
         seg.printImg();
-        seg.segment();
+        seg.labelComponents();
         seg.printImg();
     }
 }

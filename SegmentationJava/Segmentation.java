@@ -7,6 +7,8 @@
 public class Segmentation {
     // instance variables - replace the example below with your own
     private int[][] image = new int[10][10];
+    private int[][] twins = new int[10][2];
+    private int boudedRectangles[][] = new int[50][4];
 
     /**
      * Constructor for objects of class Segmentation
@@ -15,15 +17,6 @@ public class Segmentation {
         // initialise instance variables
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                // if(i==j)
-                // {
-                // image[i][j] =1;
-                // }
-                // else
-                // {
-                // image[i][j] = 0;
-                // }
-
                 image[i][j] = 0;
 
             }
@@ -47,6 +40,9 @@ public class Segmentation {
         image[6][6] = 1;
         image[7][6] = 1;
         image[9][7] = 1;
+        image[9][8] = 1;
+        image[9][9] = 1;
+        image[8][9] = 1;
         for (int i = 0; i < 3; i++) {
             for (int j = 4; j < 7; j++) {
                 image[i][j] = 1;
@@ -63,12 +59,12 @@ public class Segmentation {
         }
     }
 
-    public void segment() {
+    public void labelComponents() {
         int componentIndex = 1;
 
         // Twins indicate different components with different index that are a single
         // component
-        int twins[][] = new int[10][2];
+        // int twins[][] = new int[10][2];
         int twinsIndex = 0;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -118,4 +114,15 @@ public class Segmentation {
         }
     }
 
+    public void prepareComponentList() {
+        int currentComponent = 0;
+        int prevComponent = 0;
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < 10; j++) {
+                if (image[i][j] != 0) {
+                    currentComponent = image[i][j];
+                }
+            }
+        }
+    }
 }
