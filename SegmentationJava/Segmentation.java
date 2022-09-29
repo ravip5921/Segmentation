@@ -31,6 +31,7 @@ public class Segmentation {
         image[0][0] = 1;
         image[1][0] = 1;
         image[1][1] = 1;
+        image[1][2] = 1;
         image[3][0] = 1;
         image[4][0] = 1;
         image[6][0] = 1;
@@ -45,7 +46,7 @@ public class Segmentation {
         image[7][6] = 1;
         image[9][7] = 1;
         for (int i = 0; i < 3; i++) {
-            for (int j = 7; j < 10; j++) {
+            for (int j = 3; j < 6; j++) {
                 image[i][j] = 1;
             }
         }
@@ -62,6 +63,9 @@ public class Segmentation {
 
     public void segment() {
         int componentIndex = 1;
+
+        int twins[][] = new int[10][2];
+        int twinsIndex = 0;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 if (image[i][j] == 1) {
@@ -81,6 +85,11 @@ public class Segmentation {
                     // Checking if precceding pixels are part of the component or not
                     if (j > 0 && image[i][j - 1] != 0) {
                         image[i][j - 1] = image[i][j];
+                        if ((j - 1 > 0 && image[i][j - 2] != 0) && (image[i][j - 1] != image[i][j - 2])) {
+                            twins[twinsIndex][0] = image[i][j];
+                            twins[twinsIndex][1] = image[i][j - 2];
+                            twinsIndex++;
+                        }
                     }
 
                     System.out.println("Neighbour!!" + i + j);
@@ -99,6 +108,9 @@ public class Segmentation {
                 }
 
             }
+        }
+        for (int i = 0; i < twinsIndex; i++) {
+            System.out.println(twins[i][0] + " " + twins[i][1]);
         }
     }
 
