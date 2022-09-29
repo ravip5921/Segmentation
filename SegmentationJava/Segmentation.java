@@ -1,4 +1,3 @@
-
 /**
  * Class for segmentation using connected component analysis
  *
@@ -45,14 +44,13 @@ public class Segmentation {
         image[6][6] = 1;
         image[7][6] = 1;
         image[9][7] = 1;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 7; j < 10; j++) {
+                image[i][j] = 1;
+            }
+        }
     }
 
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param y a sample parameter for a method
-     * @return the sum of x and y
-     */
     public void printImg() {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
@@ -67,35 +65,39 @@ public class Segmentation {
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 if (image[i][j] == 1) {
-                    // if(image[i][j-1] == 1 || image[i-1][j] ==1)
-                    // {
-                    // System.out.println("found neighbour"+ i+j);
-                    // }
                     image[i][j] = componentIndex + 1;
                     componentIndex++;
                 }
+
+                // Checking to see if upper neighbour is a part of previously labelled component
                 if (((i > 0 && image[i - 1][j] != 0)) && image[i][j] == componentIndex) {
-                    if (image[i - 1][j] > image[i][j]) {
-                        image[i - 1][j] = image[i][j];
-                        continue;
+
+                    // Decrement index count to previous value as no new component detected.
+                    componentIndex--;
+
+                    // Make current pixel a part of neighbour component
+                    image[i][j] = image[i - 1][j];
+
+                    // Checking if precceding pixels are part of the component or not
+                    if (j > 0 && image[i][j - 1] != 0) {
+                        image[i][j - 1] = image[i][j];
                     }
 
-                    componentIndex--;
-                    image[i][j] = image[i - 1][j];
                     System.out.println("Neighbour!!" + i + j);
                     continue;
                 }
+                // Checking to see if left beighbour is a part of previously labelled component
                 if ((j > 0 && image[i][j - 1] != 0) && image[i][j] == componentIndex) {
-                    if (image[i][j - 1] > image[i][j]) {
-                        image[i][j - 1] = image[i][j];
-                        continue;
-                    }
 
+                    // Decrement index count to previous value as no new component detected.
                     componentIndex--;
+
+                    // Make current pixel a part of neighbour component
                     image[i][j] = image[i][j - 1];
                     System.out.println("Neighbour!!" + i + j);
                     continue;
                 }
+
             }
         }
     }
