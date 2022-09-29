@@ -30,8 +30,10 @@ public class Segmentation {
         }
         image[0][0] = 1;
         image[1][0] = 1;
-        image[1][1] = 1;
-        image[1][2] = 1;
+        image[2][0] = 1;
+        image[2][1] = 1;
+        image[2][2] = 1;
+        image[2][3] = 1;
         image[3][0] = 1;
         image[4][0] = 1;
         image[6][0] = 1;
@@ -46,7 +48,7 @@ public class Segmentation {
         image[7][6] = 1;
         image[9][7] = 1;
         for (int i = 0; i < 3; i++) {
-            for (int j = 3; j < 6; j++) {
+            for (int j = 4; j < 7; j++) {
                 image[i][j] = 1;
             }
         }
@@ -64,6 +66,8 @@ public class Segmentation {
     public void segment() {
         int componentIndex = 1;
 
+        // Twins indicate different components with different index that are a single
+        // component
         int twins[][] = new int[10][2];
         int twinsIndex = 0;
         for (int i = 0; i < 10; i++) {
