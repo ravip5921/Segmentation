@@ -5,10 +5,15 @@
  * @version v1
  */
 public class Segmentation {
-    // instance variables - replace the example below with your own
+
+    private int MAX_COMP = 50;
+    private int MAX_TWINS = 10;
+
+    private int twinsIndex = 0;
     private int[][] image = new int[10][10];
-    private int[][] twins = new int[10][2];
-    private int boudedRectangles[][] = new int[50][4];
+    private int[][] twins = new int[MAX_TWINS][2];
+    // private int boudedRectangles[][] = new int[50][4];
+    private Component listedComp[] = new Component[MAX_COMP];
 
     /**
      * Constructor for objects of class Segmentation
@@ -65,7 +70,7 @@ public class Segmentation {
         // Twins indicate different components with different index that are a single
         // component
         // int twins[][] = new int[10][2];
-        int twinsIndex = 0;
+        // int twinsIndex = 0;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 if (image[i][j] == 1) {
@@ -92,7 +97,7 @@ public class Segmentation {
                         }
                     }
 
-                    System.out.println("Neighbour!!" + i + j);
+                    // System.out.println("Neighbour!!" + i + j);
                     continue;
                 }
                 // Checking to see if left beighbour is a part of previously labelled component
@@ -103,7 +108,7 @@ public class Segmentation {
 
                     // Make current pixel a part of neighbour component
                     image[i][j] = image[i][j - 1];
-                    System.out.println("Neighbour!!" + i + j);
+                    // System.out.println("Neighbour!!" + i + j);
                     continue;
                 }
 
@@ -115,13 +120,54 @@ public class Segmentation {
     }
 
     public void prepareComponentList() {
-        int currentComponent = 0;
-        int prevComponent = 0;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
+                // For every black pixel i.e part of some component
                 if (image[i][j] != 0) {
-                    currentComponent = image[i][j];
+                    // Initially all indices are null
+
+                    // listedComp array has objects defined at indices corresponding to component
+                    // labels other indices have no object efined i.e. are null
+                    if (listedComp[image[i][j]] == null) {
+
+                        // Defining an oject at index of component label for every new component label
+                        // encountered during the pass
+                        listedComp[image[i][j]] = new Component();
+
+                        // setValues compares and sets diagonal co-ordinate values for component
+                        // rectangle
+                        listedComp[image[i][j]].setValues(j, i);
+                    }
+                    // For parts of components already initiallized, setValues is only called
+                    else {
+
+                        listedComp[image[i][j]].setValues(j, i);
+                    }
+
                 }
+            }
+        }
+        // Twins i.e. co-ordinates of component parts of a single component having
+        // different labels are merged as one big rectangle
+        mergeTwins();
+        // Bounding rectangle for each labelled component
+        getRectangles();
+    }
+
+    public void mergeTwins() {
+        // Iterates in twins array and merges two rectangles into one (done by mergeComp
+        // method) and rearranges values in listedComp array
+        for (int i = 0; i < twinsIndex; i++) {
+            listedComp[twins[i][0]].mergeComp(listedComp[twins[i][1]]);
+            listedComp[twins[i][1]] = null;
+
+        }
+    }
+
+    public void getRectangles() {
+        for (int i = 0; i < MAX_COMP; i++) {
+            if (listedComp[i] != null) {
+                listedComp[i].showValues(i);
             }
         }
     }

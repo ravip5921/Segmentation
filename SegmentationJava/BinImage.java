@@ -29,5 +29,6 @@ public class BinImage {
         seg.printImg();
         seg.labelComponents();
         seg.printImg();
+        seg.prepareComponentList();
     }
 }
