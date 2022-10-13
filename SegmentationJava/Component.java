@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-
-import javax.swing.text.StyledEditorKit;
-
 /**
  * Write a description of class Component here.
  *
