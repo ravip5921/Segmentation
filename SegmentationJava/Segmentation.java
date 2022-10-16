@@ -8,18 +8,24 @@ public class Segmentation {
 
     private int MAX_COMP = 50;
     private int MAX_TWINS = 10;
+    private int IMG_X = 10;
+    private int IMG_Y = 10;
 
     private int twinsIndex = 0;
-    private int[][] image = new int[10][10];
-    private int[][] twins = new int[MAX_TWINS][2];
-    // private int boudedRectangles[][] = new int[50][4];
-    private Component listedComp[] = new Component[MAX_COMP];
+    private int[][] image;
+    private int[][] twins;
+    private Component listedComp[];
+    // private Component listedComp[] = new Component[MAX_COMP];
 
     /**
      * Constructor for objects of class Segmentation
      */
     public Segmentation() {
         // initialise instance variables
+
+        image = new int[IMG_X][IMG_Y];
+        twins = new int[MAX_TWINS][2];
+        listedComp = new Component[MAX_COMP];
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
                 image[i][j] = 0;
@@ -53,6 +59,12 @@ public class Segmentation {
                 image[i][j] = 1;
             }
         }
+    }
+
+    public Segmentation(int[][] binImage) {
+        image = binImage;
+        twins = new int[MAX_TWINS][2];
+        listedComp = new Component[MAX_COMP];
     }
 
     public void printImg() {
