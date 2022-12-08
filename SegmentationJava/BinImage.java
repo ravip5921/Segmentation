@@ -26,8 +26,11 @@ public class BinImage {
 
         Segmentation seg = new Segmentation();
         seg.printImg();
-        seg.labelComponents();
+        seg.labelComponents1();
+        // System.out.println("hi");
         seg.printImg();
         seg.prepareComponentList();
+        seg.mergeSiblings();
+        seg.getRectangles();
     }
 }
