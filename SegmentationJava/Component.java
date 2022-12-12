@@ -1,9 +1,12 @@
+package SEG;
+
 /**
  * Write a description of class Component here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
+
 public class Component {
     private int MAX_COMP = 99999;
     // instance variables - replace the example below with your own
@@ -45,7 +48,7 @@ public class Component {
 
         // Comparing and setting Y-axis limits for components
         if (y < minY) {
-            System.out.println("y = " + y + " minY= " + minY);
+            // System.out.println("y = " + y + " minY= " + minY);
             minY = y;
         }
 
